@@ -4,10 +4,6 @@ const daysWeek = ['Понедельник', 'Вторник', 'Среда', 'Ч�
 let dayNow = new Date();
 let dayNewYear = new Date('31 december 2022').getTime();
 
-const getDayOfWeek = () => {
-    return daysWeek[dayNow.getDay() - 1];
-};
-
 const getWelcome = () => {
     switch (true) {
         case (dayNow.getHours() > 4 && dayNow.getHours() < 12):
