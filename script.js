@@ -22,8 +22,6 @@ const getWelcome = () => {
 
 };
 
-dayNow.toLocaleTimeString('en');
-
 const dayToNewYear = () => {
     return Math.floor(((dayNewYear - dayNow.getTime()) / 1000) / 60 / 60 / 24 );
 };
