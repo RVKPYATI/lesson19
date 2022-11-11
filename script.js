@@ -1,8 +1,9 @@
-const div = document.querySelector('div');
-const daysWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+
+const par = document.querySelectorAll('p');
 
 let dayNow = new Date();
-let dayNewYear = new Date('31 december 2022').getTime();
+let dayNewYear = new Date(`31 december ${dayNow.getFullYear()}`).getTime();
+const formatter = new Intl.NumberFormat('ru', { style: 'unit', unit: 'day', unitDisplay: 'long' });
 
 const getWelcome = () => {
     switch (true) {
@@ -12,23 +13,30 @@ const getWelcome = () => {
             return 'Добрый день';
         case (dayNow.getHours() >= 16 && dayNow.getHours() < 20):
             return 'Добрый вечер';
-        case (dayNow.getHours() >= 20):
+        case (dayNow.getHours() >= 20 && dayNow.getHours() <= 4):
             return 'Доброй ночи';
     }
 
 };
 
-const dayToNewYear = () => {
-    return Math.floor(((dayNewYear - dayNow.getTime()) / 1000) / 60 / 60 / 24 );
+const getTime = () => {
+    dayNow = new Date();
+    return dayNow.toLocaleTimeString('en');
 };
 
-div.innerHTML = `
-<p>${getWelcome()}</p>
+const dayToNewYear = () => {
+    return Math.floor(((dayNewYear - dayNow.getTime()) / 1000) / 60 / 60 / 24);
+};
 
-<p>Сегодня: ${daysWeek[dayNow.getDay() - 1]}</p>
 
-<p>Текущее время: ${dayNow.toLocaleTimeString('en')}</p>
 
-<p>До нового года осталось ${dayToNewYear()} дней</p>
 
-`;
+par[0].textContent = getWelcome();
+par[1].textContent = `Сегодня: ${dayNow.toLocaleDateString('ru', { weekday: 'long' })}`;
+par[2].textContent = `Текущее время: ${getTime()}`;
+par[3].textContent = `До нового года осталось ${formatter.format(dayToNewYear())}`;
+
+setInterval(() => {
+    par[2].textContent = `Текущее время: ${getTime()}`;
+}, 1000);
+
